@@ -10,6 +10,8 @@
 
 # production
 /build
+src/Rick*
+src/index.css
 
 # misc
 .DS_Store
