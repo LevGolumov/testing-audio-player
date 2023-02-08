@@ -1,0 +1,15 @@
+.player{
+    display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: flex-start;
+padding: 20px;
+
+position: absolute;
+width: 620px;
+height: 198px;
+left: 0px;
+top: 0px;
+
+background: #CFD3D6;
+}
