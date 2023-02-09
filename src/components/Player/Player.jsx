@@ -11,8 +11,8 @@ function Player(props) {
 
   // Shortening the link in the title if needed
   let titleLink = link;
-  if (titleLink.length > 49) {
-    titleLink = titleLink.slice(0, 49) + "...";
+  if (titleLink.length > 44) {
+    titleLink = titleLink.slice(0, 44) + "...";
   }
   // Getting user prefered volume saved in the local storage
   let savedVolume = localStorage.getItem("volume");
