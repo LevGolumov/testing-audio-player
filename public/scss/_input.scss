@@ -1,0 +1,61 @@
+@import "variables";
+.input {
+    width: 889px;
+    height: 168px;
+    position: relative;
+    &__btn {
+        width: 96px;
+        height: 96px;
+        background-color: $yellow;
+        border: none;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    &__field {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 32px 16px;
+        gap: 10px;
+        width: 793px;
+        height: 96px;
+        background-color: $white;
+        border: none;
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 300;
+        font-size: 24px;
+        line-height: 32px;
+
+        &::placeholder {
+            font-family: "Space Grotesk";
+            font-style: normal;
+            font-weight: 300;
+            font-size: 24px;
+            line-height: 32px;
+            color: $grey;
+        }
+
+        &:focus {
+            outline: 0.5px solid $golden;
+        }
+    }
+    &__form {
+        display: flex;
+        width: 100%;
+    }
+
+    &__substring {
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 16px;
+
+        letter-spacing: -0.3px;
+
+        color: $golden;
+    }
+}

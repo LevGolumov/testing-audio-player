@@ -1,15 +1,147 @@
-.player{
+@import "variables";
+
+.player {
     display: flex;
-flex-direction: column;
-justify-content: space-between;
-align-items: flex-start;
-padding: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
 
-position: absolute;
-width: 620px;
-height: 198px;
-left: 0px;
-top: 0px;
+    position: relative;
+    width: 620px;
+    height: 198px;
+    left: 0px;
+    top: 0px;
 
-background: #CFD3D6;
+    background: #cfd3d6;
+
+    &__link {
+        width: 620px;
+        height: 32px;
+
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 32px;
+        margin: 20px 0;
+
+        /* identical to box height, or 133% */
+        letter-spacing: -0.4px;
+
+        color: #1b191c;
+    }
+
+    &__thumb {
+        position: absolute;
+        top: -5px;
+        width: 16px;
+    }
+
+    &__progress-bar {
+        position: absolute;
+        width: 580px;
+        height: $progress-bar-height;
+        left: 20px;
+        top: 110px;
+        opacity: 1;
+        background: #adacad;
+
+        &--cover {
+            background-color: #ffffff;
+            position: absolute;
+            top: 0;
+            width: 0%;
+            height: $progress-bar-height;
+        }
+    }
+
+    &__volume {
+        // display: flex;
+        // flex-direction: column;
+        // align-items: flex-start;
+        // padding: 0px;
+        // gap: 10px;
+        position: absolute;
+        width: 252px;
+        height: $progress-bar-height;
+        left: 328px;
+        top: 7px;
+        background: #ffffff;
+
+        &--cover {
+            background-color: black;
+            position: absolute;
+            top: 0;
+            width: 0%;
+            height: $progress-bar-height;
+        }
+    }
+
+    &__input {
+        -webkit-appearance: none;
+        height: $thumb-height;
+        width: 100%;
+        cursor: pointer;
+        opacity: 0;
+        margin: 0 auto;
+        position: absolute;
+        top: -5px;
+    }
+
+    &__info-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px;
+        gap: 130px;
+        width: 580px;
+        height: 16px;
+        position: relative;
+
+        /* Inside auto layout */
+        flex: none;
+        order: 2;
+        align-self: stretch;
+        flex-grow: 0;
+    }
+
+    &__timer {
+        width: 33px;
+        height: 16px;
+
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+
+        /* identical to box height, or 133% */
+        letter-spacing: -0.3px;
+
+        color: #1b191c;
+    }
+
+    &__buffering {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: #deff97;
+    }
+
+    &__back {
+        cursor: pointer;
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 32px;
+        letter-spacing: -0.4px;
+
+        color: $black;
+        border-radius: 2px;
+    }
 }
