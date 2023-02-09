@@ -1,18 +1,18 @@
 import { useRef, useState, useContext } from "react";
-import video from "../../Rick.mp4";
 import Controls from "./controls/Controls";
 import Slider from "./slider/Slider";
 import playerThumb from "../../img/playerSliderThumb.svg";
 import volumeThumb from "../../img/volumeSliderThumb.svg";
-import Buffering from "./Buffering/Buffering";
 import { LinkContext } from "../context/link-context";
 
 function Player(props) {
   const linkCtx = useContext(LinkContext);
-  const link = linkCtx.link;
-  let titleLink = link
-  if (titleLink.length > 49 ) {
-    titleLink = titleLink.slice(0, 49) + "..."
+  // const link = linkCtx.link;
+  const link =
+    "https://lalalai.s3.us-west-2.amazonaws.com/media/split/a7564eb8-cbf2-40e2-9cb8-6061d8d055a7/no_vocals";
+  let titleLink = link;
+  if (titleLink.length > 49) {
+    titleLink = titleLink.slice(0, 49) + "...";
   }
   let savedVolume = localStorage.getItem("volume");
   if (!savedVolume) {
@@ -22,6 +22,7 @@ function Player(props) {
   const [volume, setVolume] = useState(savedVolume);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [isBuffering, setIsBuffering] = useState(false);
   const audioRef = useRef();
 
   function sliderChangeHandler(event) {
@@ -94,7 +95,7 @@ function Player(props) {
     <div className="container">
       <p className="player__link">{titleLink}</p>
       <div className="player">
-        <Buffering />
+        <div className={isBuffering ? "player__buffering" : "player__not-buffering"}></div>
         <Controls play={play} isPlaying={isPlaying} />
         <Slider
           name="audio"
@@ -117,7 +118,9 @@ function Player(props) {
           />
         </div>
       </div>
-      <p className="player__back" onClick={() => props.setPage("input")}>← Back</p>
+      <p className="player__back" onClick={() => props.setPage("input")}>
+        ← Back
+      </p>
     </div>
   );
 }

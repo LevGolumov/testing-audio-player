@@ -1,6 +1,7 @@
 @import "variables";
 
 .player {
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -125,11 +126,28 @@
 
     &__buffering {
         position: absolute;
+        left: -320px;
         top: 0;
-        left: 0;
-        width: 100%;
+        width: 320px;
         height: 4px;
-        background-color: #deff97;
+        background-color: $white;
+        animation: buffering 1.5s  infinite;
+
+        @keyframes buffering {
+            0% {
+                left: -320px;
+            }
+            50%{
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+    }
+
+    &__not-buffering{
+        display: none;
     }
 
     &__back {

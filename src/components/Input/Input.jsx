@@ -1,9 +1,11 @@
 import { useContext, useRef, useState } from "react";
 import { LinkContext } from "../context/link-context";
+import warning from "../../img/warning.svg"
 
 function Input(props) {
   const linkCtx = useContext(LinkContext);
   const inputRef = useRef();
+  const [input, setInput] = useState("")
   const [error, setError] = useState({ isError: false, errorMessage: "" });
   const [isChecking, setIsChecking] = useState(false);
 
@@ -50,14 +52,43 @@ function Input(props) {
     checkLink(enteredLink);
   }
 
+  function WarningSVG(props){
+    return <svg className={props.className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#C6A827" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 8V12" stroke="#C6A827" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="12" cy="16" r="0.5" fill="black" stroke="#C6A827"/>
+    </svg>
+    
+  }
+
+  function onBlurHandler(){
+    if (input === ""){
+
+      setError({ isError: true, errorMessage: "Please, insert a link" })
+    }
+  }
+
+  function onFocusHandler(){
+    setError({ isError: false, errorMessage: "" })
+}
+
+function onInputChangeHandler(event){
+  console.log(event.target.value)
+  setInput(event.target.value)
+}
+
   return (
     <div className="input">
       <h1>Insert the link</h1>
       <form className="input__form" onSubmit={submitHandler}>
         <input
           ref={inputRef}
-          className="input__field"
+          className={`input__field ${error.isError && "input__field--error"}`}
           placeholder="https://"
+          onFocus={onFocusHandler}
+          onBlur={onBlurHandler}
+          onChange={onInputChangeHandler}
+          value={input}
         ></input>
         <button className="input__btn">
           <svg
@@ -75,6 +106,7 @@ function Input(props) {
             />
           </svg>
         </button>
+        {error.isError && <WarningSVG className="input__warning" />}
       </form>
       {error.isError && (
         <p className="input__substring">{error.errorMessage}</p>
