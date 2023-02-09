@@ -26,8 +26,6 @@
         font-size: 24px;
         line-height: 32px;
         margin: 20px 0;
-
-        /* identical to box height, or 133% */
         letter-spacing: -0.4px;
 
         color: #1b191c;
@@ -58,11 +56,6 @@
     }
 
     &__volume {
-        // display: flex;
-        // flex-direction: column;
-        // align-items: flex-start;
-        // padding: 0px;
-        // gap: 10px;
         position: absolute;
         width: 252px;
         height: $progress-bar-height;
@@ -80,7 +73,6 @@
     }
 
     &__input {
-        -webkit-appearance: none;
         height: $thumb-height;
         width: 100%;
         cursor: pointer;
@@ -152,6 +144,7 @@
 
     &__back {
         cursor: pointer;
+        width: fit-content;
         font-family: "Space Grotesk";
         font-style: normal;
         font-weight: 400;

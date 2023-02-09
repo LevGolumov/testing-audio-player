@@ -7,14 +7,16 @@ import { LinkContext } from "../context/link-context";
 
 function Player(props) {
   const linkCtx = useContext(LinkContext);
-  // const link = linkCtx.link;
-  const link =
-    "https://lalalai.s3.us-west-2.amazonaws.com/media/split/a7564eb8-cbf2-40e2-9cb8-6061d8d055a7/no_vocals";
+  const link = linkCtx.link;
+
+  // Shortening the link in the title if needed
   let titleLink = link;
   if (titleLink.length > 49) {
     titleLink = titleLink.slice(0, 49) + "...";
   }
+  // Getting user prefered volume saved in the local storage
   let savedVolume = localStorage.getItem("volume");
+  // If there's no info in the local storage, setting up a default value
   if (!savedVolume) {
     savedVolume = 70;
   }
@@ -25,19 +27,22 @@ function Player(props) {
   const [isBuffering, setIsBuffering] = useState(false);
   const audioRef = useRef();
 
+  // Handling the audio thumb position
   function sliderChangeHandler(event) {
     const audio = audioRef.current;
     audio.currentTime = (audio.duration / 100) * event.target.value;
     setTrackPercentage(event.target.value);
   }
 
+  // Handling volume changes and saving the result to the local storage
   function volumeChangeHandler(event) {
     audioRef.current.volume = event.target.value / 100;
     localStorage.setItem("volume", event.target.value);
     setVolume(event.target.value);
   }
 
-  function play() {
+  // Playing or pausing the track
+  function playHandler() {
     const audio = audioRef.current;
     audio.volume = volume / 100;
 
@@ -52,17 +57,20 @@ function Player(props) {
     }
   }
 
-  const getCurrDuration = (event) => {
+  // Setting up the current time
+  const getCurrTime = (event) => {
     const percent = (
       (event.currentTarget.currentTime / event.currentTarget.duration) *
       100
     ).toFixed(2);
     const time = event.currentTarget.currentTime;
 
+    // Moving the audio thumb
     setTrackPercentage(+percent);
     setCurrentTime(time.toFixed(2));
   };
 
+  // Returning the timer info
   function secondsToHms(seconds) {
     if (!seconds) return "00:00";
 
@@ -91,12 +99,40 @@ function Player(props) {
     }
   }
 
+  // Showing buffering animation
+  function bufferingHandler() {
+    setIsBuffering(true);
+  }
+
+  // Handling buffering animation based on playability
+  function canPlayHandler() {
+    const audio = audioRef.current;
+    setIsBuffering(false);
+    // Showing the animation if the audio not fully ready
+    if (audio.readyState >= 0 && audio.readyState < 4) {
+      setIsBuffering(true);
+    } else {
+    // Hiding the animation
+      setIsBuffering(false);
+    }
+  }
+
+  // Resetting states at the end of the track
+  function endingHandler(){
+    setIsPlaying(false);
+    setIsBuffering(false);
+  }
+
   return (
     <div className="container">
       <p className="player__link">{titleLink}</p>
       <div className="player">
-        <div className={isBuffering ? "player__buffering" : "player__not-buffering"}></div>
-        <Controls play={play} isPlaying={isPlaying} />
+        <div
+          className={
+            isBuffering ? "player__buffering" : "player__not-buffering"
+          }
+        ></div>
+        <Controls play={playHandler} isPlaying={isPlaying} />
         <Slider
           name="audio"
           thumb={playerThumb}
@@ -104,7 +140,15 @@ function Player(props) {
           className="player__progress-bar"
           onChange={sliderChangeHandler}
         />
-        <audio ref={audioRef} onTimeUpdate={getCurrDuration}>
+        <audio
+          preload="auto"
+          ref={audioRef}
+          onTimeUpdate={getCurrTime}
+          onLoadStart={bufferingHandler}
+          onWaiting={bufferingHandler}
+          onCanPlayThrough={canPlayHandler}
+          onEnded={endingHandler}
+        >
           <source src={link} />
         </audio>
         <div className="player__info-row">

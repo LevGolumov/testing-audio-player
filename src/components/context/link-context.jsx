@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+// Setting up the context for the future convenience , if we want to add router or something fancy
+
 export const LinkContext = React.createContext({
   link: "",
   setLink: () => {}
@@ -7,7 +9,6 @@ export const LinkContext = React.createContext({
 
 function LinkContextProvider(props) {
   const [link, setLink] = useState("");
-
 
   const contextValue = {
     link,
