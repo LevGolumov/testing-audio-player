@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { LinkContext } from "../context/link-context";
 
 function Input(props) {
@@ -7,6 +7,7 @@ function Input(props) {
   const [isHttps, setIsHttps] = useState(true);
   const [error, setError] = useState({ isError: false, errorMessage: "" });
   const [isChecking, setIsChecking] = useState(false);
+  const audioRef = useRef()
 
   // Making setting errors easier
   function errorMessages(trigger) {
@@ -88,13 +89,13 @@ function Input(props) {
     if (!newLink.startsWith("https://")){
       newLink = "https://" + newLink
     }
-    const audio = new Audio(newLink);
+    const audio = audioRef.current;
 
     // trying to play audio to check if the link is valid
     try {
-      await audio.play();
-      // pausing, or else the music will play
-      audio.pause();
+      // Audio element automatically stops itself when page changes
+      await audio.play()
+      
       setIsChecking(false);
       // saving link to the context
       linkCtx.setLink(newLink);
@@ -195,6 +196,7 @@ function Input(props) {
         <p className="input__substring">{error.errorMessage}</p>
       )}
       {isChecking && <p className="input__substring">Checking...</p>}
+      <audio src={input} ref={audioRef}></audio>
     </div>
   );
 }
