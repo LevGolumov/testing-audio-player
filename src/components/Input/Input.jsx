@@ -196,7 +196,7 @@ function Input(props) {
         <p className="input__substring">{error.errorMessage}</p>
       )}
       {isChecking && <p className="input__substring">Checking...</p>}
-      <audio src={input} ref={audioRef}></audio>
+      <audio preload="none" src={input} ref={audioRef}></audio>
     </div>
   );
 }
